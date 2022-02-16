@@ -15,7 +15,8 @@
 typedef
 struct
 {
-	uint32_t CS_GPIO_PIN;
+	uint32_t CS_PIN;
+	GPIO_TypeDef* gpio_port;
 	union
 	{
 		double data[3];

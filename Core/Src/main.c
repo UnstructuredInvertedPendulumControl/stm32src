@@ -19,6 +19,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "stdio.h"
+#include "adxl345.h"
+#include "DataTypes.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -46,6 +49,18 @@ I2C_HandleTypeDef hi2c1;
 I2C_HandleTypeDef hi2c2;
 
 UART_HandleTypeDef huart1;
+
+
+AccelerometerData_t accelerometer1;
+AccelerometerData_t accelerometer2;
+AccelerometerData_t accelerometer3;
+
+
+
+
+void __io_putchar(uint8_t ch) {
+HAL_UART_Transmit(&huart1, &ch, 1, 1);
+}
 
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -109,9 +124,16 @@ int main(void)
   MX_I2C2_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
+  setbuf(stdout, NULL);
 
   /* USER CODE END 2 */
+  accelerometer1.CS_PIN = GPIO_PIN_2;
+  accelerometer1.gpio_port = GPIOB;
 
+
+  vADXL345_DeviceSetup(&accelerometer1, &hi2c1);
+  //vADXL345_DeviceSetup(accelerometer2.CS_PIN, &hi2c1);
+  //vADXL345_DeviceSetup(accelerometer3.CS_PIN, &hi2c1);
   /* Init scheduler */
   osKernelInitialize();
 
@@ -462,9 +484,16 @@ void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
-  for(;;)
+
+  for(int i = 0; i < 9 ; i ++)
   {
-    osDelay(1);
+    osDelay(5
+    		);
+    vADXL345_DeviceRead(&accelerometer1, &hi2c1);
+    printf("=============== [%d]\n\r\n", i);
+    printf("X: %f\n\r\n", accelerometer1.data[0]);
+    printf("Y: %f\n\r\n", accelerometer1.data[1]);
+    printf("Z: %f\n\r\n", accelerometer1.data[2]);
   }
   /* USER CODE END 5 */
 }

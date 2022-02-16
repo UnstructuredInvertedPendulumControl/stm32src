@@ -79,8 +79,8 @@ all: main-build
 main-build: WIPNAENAE.elf secondary-outputs
 
 # Tool invocations
-WIPNAENAE.elf: $(OBJS) $(USER_OBJS) /home/jsmartini/STM32CubeIDE/workspace_1.8.0/WIPNAENAE/STM32G071RBIX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "WIPNAENAE.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"/home/jsmartini/STM32CubeIDE/workspace_1.8.0/WIPNAENAE/STM32G071RBIX_FLASH.ld" --specs=nosys.specs -Wl,-Map="WIPNAENAE.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+WIPNAENAE.elf: $(OBJS) $(USER_OBJS) C:\Users\Jonathan\ Martini\Desktop\stm32src\STM32G071RBIX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "WIPNAENAE.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"C:\Users\Jonathan Martini\Desktop\stm32src\STM32G071RBIX_FLASH.ld" --specs=nosys.specs -Wl,-Map="WIPNAENAE.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
