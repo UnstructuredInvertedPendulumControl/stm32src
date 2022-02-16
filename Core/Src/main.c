@@ -21,6 +21,7 @@
 #include "cmsis_os.h"
 #include "stdio.h"
 #include "adxl345.h"
+#include "AS5600.h"
 #include "DataTypes.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -495,6 +496,10 @@ void StartDefaultTask(void *argument)
     printf("Y: %f\n\r\n", accelerometer1.data[1]);
     printf("Z: %f\n\r\n", accelerometer1.data[2]);
   }
+  printf("AS5600 code \n\r\n");
+  double out = read_as5600(&hi2c2);
+
+  printf("bullshit reading %f \n\r\n", out );
   /* USER CODE END 5 */
 }
 
