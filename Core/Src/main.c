@@ -19,13 +19,14 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
-#include "stdio.h"
-#include "adxl345.h"
-#include "AS5600.h"
-#include "DataTypes.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "stdio.h"
+#include "adxl345.h"
+#include "AS5600.h"
+#include "motor.h"
+#include "CONF.h"
 
 /* USER CODE END Includes */
 
@@ -46,22 +47,14 @@
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
 
+DAC_HandleTypeDef hdac1;
+
 I2C_HandleTypeDef hi2c1;
 I2C_HandleTypeDef hi2c2;
 
+TIM_HandleTypeDef htim2;
+
 UART_HandleTypeDef huart1;
-
-
-AccelerometerData_t accelerometer1;
-AccelerometerData_t accelerometer2;
-AccelerometerData_t accelerometer3;
-
-
-
-
-void __io_putchar(uint8_t ch) {
-HAL_UART_Transmit(&huart1, &ch, 1, 1);
-}
 
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -71,6 +64,13 @@ const osThreadAttr_t defaultTask_attributes = {
   .stack_size = 128 * 4
 };
 /* USER CODE BEGIN PV */
+AccelerometerData_t accelerometer1;
+AccelerometerData_t accelerometer2;
+AccelerometerData_t accelerometer3;
+
+void __io_putchar(uint8_t ch) {
+	HAL_UART_Transmit(&huart1, &ch, 1, 1);
+}
 
 /* USER CODE END PV */
 
@@ -81,6 +81,8 @@ static void MX_ADC1_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_I2C2_Init(void);
 static void MX_USART1_UART_Init(void);
+static void MX_TIM2_Init(void);
+static void MX_DAC1_Init(void);
 void StartDefaultTask(void *argument);
 
 /* USER CODE BEGIN PFP */
@@ -89,6 +91,7 @@ void StartDefaultTask(void *argument);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
 
 /* USER CODE END 0 */
 
@@ -108,7 +111,6 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -124,17 +126,22 @@ int main(void)
   MX_I2C1_Init();
   MX_I2C2_Init();
   MX_USART1_UART_Init();
+  MX_TIM2_Init();
+  MX_DAC1_Init();
   /* USER CODE BEGIN 2 */
   setbuf(stdout, NULL);
 
-  /* USER CODE END 2 */
+
   accelerometer1.CS_PIN = GPIO_PIN_2;
   accelerometer1.gpio_port = GPIOB;
 
-
+  printf("Initializing Devices\r\n");
   vADXL345_DeviceSetup(&accelerometer1, &hi2c1);
-  //vADXL345_DeviceSetup(accelerometer2.CS_PIN, &hi2c1);
-  //vADXL345_DeviceSetup(accelerometer3.CS_PIN, &hi2c1);
+  HAL_ADCEx_Calibration_Start(&hadc1);
+
+  printf("Devices Initialized\r\n");
+  /* USER CODE END 2 */
+
   /* Init scheduler */
   osKernelInitialize();
 
@@ -151,7 +158,7 @@ int main(void)
   /* USER CODE END RTOS_TIMERS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
-
+  /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
@@ -277,6 +284,47 @@ static void MX_ADC1_Init(void)
 }
 
 /**
+  * @brief DAC1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_DAC1_Init(void)
+{
+
+  /* USER CODE BEGIN DAC1_Init 0 */
+
+  /* USER CODE END DAC1_Init 0 */
+
+  DAC_ChannelConfTypeDef sConfig = {0};
+
+  /* USER CODE BEGIN DAC1_Init 1 */
+
+  /* USER CODE END DAC1_Init 1 */
+  /** DAC Initialization
+  */
+  hdac1.Instance = DAC1;
+  if (HAL_DAC_Init(&hdac1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** DAC channel OUT1 config
+  */
+  sConfig.DAC_SampleAndHold = DAC_SAMPLEANDHOLD_DISABLE;
+  sConfig.DAC_Trigger = DAC_TRIGGER_NONE;
+  sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_ENABLE;
+  sConfig.DAC_ConnectOnChipPeripheral = DAC_CHIPCONNECT_DISABLE;
+  sConfig.DAC_UserTrimming = DAC_TRIMMING_FACTORY;
+  if (HAL_DAC_ConfigChannel(&hdac1, &sConfig, DAC_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN DAC1_Init 2 */
+
+  /* USER CODE END DAC1_Init 2 */
+
+}
+
+/**
   * @brief I2C1 Initialization Function
   * @param None
   * @retval None
@@ -369,6 +417,65 @@ static void MX_I2C2_Init(void)
 }
 
 /**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM2_Init(void)
+{
+
+  /* USER CODE BEGIN TIM2_Init 0 */
+
+  /* USER CODE END TIM2_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+  TIM_OC_InitTypeDef sConfigOC = {0};
+
+  /* USER CODE BEGIN TIM2_Init 1 */
+
+  /* USER CODE END TIM2_Init 1 */
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 0;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 4294967295;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_TIM_PWM_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = 0;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM2_Init 2 */
+
+  /* USER CODE END TIM2_Init 2 */
+  HAL_TIM_MspPostInit(&htim2);
+
+}
+
+/**
   * @brief USART1 Initialization Function
   * @param None
   * @retval None
@@ -437,21 +544,13 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4|GPIO_PIN_5, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2|GPIO_PIN_11, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : PA1 */
   GPIO_InitStruct.Pin = GPIO_PIN_1;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PA4 */
-  GPIO_InitStruct.Pin = GPIO_PIN_4;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF5_LPTIM2;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PC4 PC5 */
@@ -461,8 +560,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PB2 */
-  GPIO_InitStruct.Pin = GPIO_PIN_2;
+  /*Configure GPIO pins : PB2 PB11 */
+  GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_11;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -485,21 +584,11 @@ void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
-
-  for(int i = 0; i < 9 ; i ++)
+  for(;;)
   {
-    osDelay(5
-    		);
-    vADXL345_DeviceRead(&accelerometer1, &hi2c1);
-    printf("=============== [%d]\n\r\n", i);
-    printf("X: %f\n\r\n", accelerometer1.data[0]);
-    printf("Y: %f\n\r\n", accelerometer1.data[1]);
-    printf("Z: %f\n\r\n", accelerometer1.data[2]);
-  }
-  printf("AS5600 code \n\r\n");
-  double out = read_as5600(&hi2c2);
+    osDelay(400);
 
-  printf("bullshit reading %f \n\r\n", out );
+  }
   /* USER CODE END 5 */
 }
 

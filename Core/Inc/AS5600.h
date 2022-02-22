@@ -48,6 +48,6 @@
 #define AS5600_RNG 0.0
 #define AS5600_UNC 0.0
 
-double read_as5600(I2C_HandleTypeDef* devref);
+uint8_t read_as5600(I2C_HandleTypeDef* devref);
 
 #endif /* AS5600_H_ */

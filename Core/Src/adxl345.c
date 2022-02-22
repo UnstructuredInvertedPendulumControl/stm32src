@@ -7,7 +7,6 @@
 
 #include "adxl345.h"
 #include "main.h"
-#include "cmsis_os.h"
 #include "stdio.h"
 
 uint8_t LSBMSB_REGS[] = {DATAX0, DATAY0, DATAZ0, DATAX1, DATAY1, DATAZ1};

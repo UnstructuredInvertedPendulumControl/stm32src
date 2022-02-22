@@ -1,2 +1,2 @@
-as5600.c:19:12:payloadreg	16	static
-as5600.c:16:15:read_as5600	48	static
+as5600.c:18:12:payloadreg	16	static
+as5600.c:15:16:read_as5600	48	static

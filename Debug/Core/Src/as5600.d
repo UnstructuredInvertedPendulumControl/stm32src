@@ -25,6 +25,8 @@ Core/Src/as5600.o: ../Core/Src/as5600.c ../Core/Inc/AS5600.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_adc_ex.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_adc_ex.h \
+ ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_dac.h \
+ ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_dac_ex.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_exti.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_flash.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_flash_ex.h \
@@ -32,21 +34,11 @@ Core/Src/as5600.o: ../Core/Src/as5600.c ../Core/Inc/AS5600.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_i2c_ex.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_pwr.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_pwr_ex.h \
+ ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim.h \
+ ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim_ex.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart_ex.h \
- ../Core/Inc/main.h \
- ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h \
- ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
- ../Core/Inc/FreeRTOSConfig.h \
- ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h \
- ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h \
- ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h \
- ../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/portmacro.h \
- ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h \
- ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
- ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h \
- ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
- ../Core/Inc/adxl345.h ../Core/Inc/DataTypes.h
+ ../Core/Inc/main.h
 
 ../Core/Inc/AS5600.h:
 
@@ -104,6 +96,10 @@ Core/Src/as5600.o: ../Core/Src/as5600.c ../Core/Inc/AS5600.h \
 
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_adc_ex.h:
 
+../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_dac.h:
+
+../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_dac_ex.h:
+
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_exti.h:
 
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_flash.h:
@@ -118,34 +114,12 @@ Core/Src/as5600.o: ../Core/Src/as5600.c ../Core/Inc/AS5600.h \
 
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_pwr_ex.h:
 
+../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim.h:
+
+../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim_ex.h:
+
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart.h:
 
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart_ex.h:
 
 ../Core/Inc/main.h:
-
-../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h:
-
-../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
-
-../Core/Inc/FreeRTOSConfig.h:
-
-../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h:
-
-../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h:
-
-../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h:
-
-../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/portmacro.h:
-
-../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h:
-
-../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
-
-../Middlewares/Third_Party/FreeRTOS/Source/include/list.h:
-
-../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h:
-
-../Core/Inc/adxl345.h:
-
-../Core/Inc/DataTypes.h:

@@ -1,0 +1,98 @@
+Configuration	WIPNAENAE
+STM32CubeMX 	6.4.0
+Date	02/22/2022
+MCU	STM32G071RBIx
+
+
+
+PERIPHERALS	MODES	FUNCTIONS	PINS
+ADC1	IN0	ADC1_IN0	PA0
+I2C1	I2C	I2C1_SCL	PB6
+I2C1	I2C	I2C1_SDA	PB7
+I2C2	I2C	I2C2_SCL	PA11 [PA9]
+I2C2	I2C	I2C2_SDA	PA12 [PA10]
+RCC	Crystal/Ceramic Resonator	RCC_OSC_IN	PF0-OSC_IN (PF0)
+RCC	Crystal/Ceramic Resonator	RCC_OSC_OUT	PF1-OSC_OUT (PF1)
+SYS	SysTick	SYS_VS_Systick	VP_SYS_VS_Systick
+SYS	Dead Battery Signals disabled	SYS_VS_DBSignals	VP_SYS_VS_DBSignals
+TIM2	Internal Clock	TIM2_VS_ClockSourceINT	VP_TIM2_VS_ClockSourceINT
+TIM2	PWM Generation CH1	TIM2_CH1	PA15
+USART1	Asynchronous	USART1_RX	PA10
+USART1	Asynchronous	USART1_TX	PA9
+
+
+
+Pin Nb	PINs	FUNCTIONs	LABELs
+A3	PB7	I2C1_SDA	
+A4	PB6	I2C1_SCL	
+B8	PA12 [PA10]	I2C2_SDA	
+C6	PA15	TIM2_CH1	
+C8	PA11 [PA9]	I2C2_SCL	
+D6	PA10	USART1_RX	
+E6	PA9	USART1_TX	
+F1	PF0-OSC_IN (PF0)	RCC_OSC_IN	
+G1	PF1-OSC_OUT (PF1)	RCC_OSC_OUT	
+H2	PA0	ADC1_IN0	
+H3	PA1	GPIO_Output	
+H5	PC4	GPIO_Output	
+H6	PC5	GPIO_Output	
+H7	PB2	GPIO_Output	
+PERIPHERALS	MODES	FUNCTIONS	PINS
+ADC1	IN0	ADC1_IN0	PA0
+I2C1	I2C	I2C1_SCL	PB6
+I2C1	I2C	I2C1_SDA	PB7
+I2C2	I2C	I2C2_SCL	PA11 [PA9]
+I2C2	I2C	I2C2_SDA	PA12 [PA10]
+RCC	Crystal/Ceramic Resonator	RCC_OSC_IN	PF0-OSC_IN (PF0)
+RCC	Crystal/Ceramic Resonator	RCC_OSC_OUT	PF1-OSC_OUT (PF1)
+SYS	SysTick	SYS_VS_Systick	VP_SYS_VS_Systick
+SYS	Dead Battery Signals disabled	SYS_VS_DBSignals	VP_SYS_VS_DBSignals
+TIM2	Internal Clock	TIM2_VS_ClockSourceINT	VP_TIM2_VS_ClockSourceINT
+TIM2	PWM Generation CH1	TIM2_CH1	PA15
+USART1	Asynchronous	USART1_RX	PA10
+USART1	Asynchronous	USART1_TX	PA9
+
+
+
+Pin Nb	PINs	FUNCTIONs	LABELs
+A3	PB7	I2C1_SDA	
+A4	PB6	I2C1_SCL	
+B8	PA12 [PA10]	I2C2_SDA	
+C6	PA15	TIM2_CH1	
+C8	PA11 [PA9]	I2C2_SCL	
+D6	PA10	USART1_RX	
+E6	PA9	USART1_TX	
+F1	PF0-OSC_IN (PF0)	RCC_OSC_IN	
+G1	PF1-OSC_OUT (PF1)	RCC_OSC_OUT	
+H2	PA0	ADC1_IN0	
+H3	PA1	GPIO_Output	
+H5	PC4	GPIO_Output	
+H6	PC5	GPIO_Output	
+H7	PB2	GPIO_Output	
+
+
+
+SOFTWARE PROJECT
+
+Project Settings : 
+Project Name : WIPNAENAE
+Project Folder : C:\Users\Jonathan Martini\Desktop\stm32src
+Toolchain / IDE : STM32CubeIDE
+Firmware Package Name and Version : STM32Cube FW_G0 V1.5.0
+
+
+Code Generation Settings : 
+STM32Cube MCU packages and embedded software packs : Copy only the necessary library files
+Generate peripheral initialization as a pair of '.c/.h' files per peripheral : No
+Backup previously generated files when re-generating : No
+Delete previously generated files when not re-generated : Yes
+Set all free pins as analog (to optimize the power consumption) : No
+
+
+Toolchains Settings : 
+Compiler Optimizations : 
+
+
+
+
+
